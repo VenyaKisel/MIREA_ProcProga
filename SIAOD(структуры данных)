@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <cstring> 
+#include <vector>
+#include <cstdlib>
+#include <Windows.h>
+#include <ctime>
+#include <set>
+#include <functional>
+#include <conio.h>
+#include <utility>
+using namespace std;
+
+// задание на расписание дня
+
+struct Table{
+    char group[15];
+    char para[2];
+    char classroom[5];
+    char key_work[2];
+    string arraySubj[6][2];
+    // vector < pair< string, string> > v_lessons;
+};
+
+
+
+
+
+Table *InputTable(int n){
+    Table *table = new Table[n];
+    cout << "Enter your group: \n";
+    cin >> table[0].group;
+    for(int i = 0; i < n; i++){
+        cout << "enter classroom" << endl;
+        cin >> table[i].classroom;
+            cout << "enter the name of your lesson" << endl;
+            string lesson;
+            cin >> lesson;
+            cout << "enter the type of your lesson('lec', 'lab', 'pr'): \n";
+            string type_lesson;
+            cin >> type_lesson;
+            // table[i].v_lessons.push_back(make_pair(lesson, type_lesson));
+            table[i].arraySubj[i][0] = lesson;
+            table[i].arraySubj[i][1] = type_lesson;
+    }
+    cout << endl << endl;
+    return table;
+}
+
+void OutputTable(Table *table, int n){
+    for(int i = 0; i < n; i++){
+        cout << "Classroom: \t" << table[i].classroom << endl;
+        cout << "Name of the subj: \t" << table[i].arraySubj[i][0] << endl << "Type of the subj: \t" << table[i].arraySubj[i][1] << endl;
+        cout << endl;
+    }
+    cout << endl;
+    cout << "group: \t" << table[0].group << endl;
+
+    double sum = 0;
+    double lec = 1.5;
+    double pr = 1.5;
+    double lab = 3;
+
+    for(int i = 0; i < n; i++){
+        if(table[i].arraySubj[i][1] == "lab") sum += lab; 
+        else if(table[i].arraySubj[i][1] == "pr") sum += pr;
+        else if(table[i].arraySubj[i][1] == "lec") sum += lec;
+    }
+    cout << "Sum of teaching hours: \t " << sum << endl;
+}
+
+
+
+int main(){
+    SetConsoleCP(1251);
+    int n = 0;
+    cout << "enter sum of ur lessons:" << endl;
+    cin >> n;
+    if(n >= 1){
+        Table *table = InputTable(n);
+        OutputTable(table, n);
+        delete [] table; 
+        return 0;
+    }
+    else{
+        cout << "Try again" << endl;
+        return 0;
+    }
+    return 0;
+}
